@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アナログ時計</title>
+    <style>
+        /* アナログ時計の針 */
+        .clock-needle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: 50% 100%;
+            transform: translate(-50%, -100%);
+        }
+
+        /* 秒針 */
+        .second-needle {
+            width: 2px;
+            height: 50px;
+            background-color: #FF0000;
+            transform: rotate(0deg);
+            transition: transform 1s linear;
+        }
+
+        /* 分針 */
+        .minute-needle {
+            width: 4px;
+            height: 40px;
+            background-color: #000;
+            transform: rotate(0deg);
+            transition: transform 1s linear;
+        }
+
+        /* 時針 */
+        .hour-needle {
+            width: 6px;
+            height: 30px;
+            background-color: #000;
+            transform: rotate(0deg);
+            transition: transform 1s linear;
+        }
+    </style>
+</head>
+<body>
+    <!-- 秒針 -->
+    <div class="clock-needle second-needle"></div>
+
+    <!-- 分針 -->
+    <div class="clock-needle minute-needle"></div>
+
+    <!-- 時針 -->
+    <div class="clock-needle hour-needle"></div>
+
+    <script>
+        // 現在の時刻を取得
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            // 秒針の回転
+            const secondNeedle = document.querySelector('.second-needle');
+            const secondDegree = (360 / 60) * seconds;
+            secondNeedle.style.transform = `translate(-50%, -100%) rotate(${secondDegree}deg)`;
+
+            // 分針の回転
+            const minuteNeedle = document.querySelector('.minute-needle');
+            const minuteDegree = (360 / 60) * (minutes + seconds / 60);
+            minuteNeedle.style.transform = `translate(-50%, -100%) rotate(${minuteDegree}deg)`;
+
+            // 時針の回転
+            const hourNeedle = document.querySelector('.hour-needle');
+            const hourDegree = (360 / 12) * (hours + minutes / 60);
+            hourNeedle.style.transform = `translate(-50%, -100%) rotate(${hourDegree}deg)`;
+
+            // 1秒ごとに更新
+            setTimeout(updateClock, 1000);
+        }
+
+        // 初回実行
+        updateClock();
+    </script>
+</body>
+</html>
